@@ -24,9 +24,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BroadcastApp bApp = (BroadcastApp)this.getApplicationContext();
-        bApp.mAct = this;
-
         sBroadcast = (Button)findViewById(R.id.buttonStatic);
         dBroadcast = (Button)findViewById(R.id.buttonDynamic);
         eStatic = (EditText)findViewById(R.id.editStatic);

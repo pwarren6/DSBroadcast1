@@ -13,8 +13,6 @@ public class MyReceiver1 extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
         // an Intent broadcast.
-        MainActivity mAct = ((BroadcastApp)context.getApplicationContext()).mAct;
-        mAct.eStatic.setText(intent.getStringExtra("messageStatic"));
         Toast.makeText(context, intent.getExtras().getString("messageStatic"), Toast.LENGTH_SHORT).show();
     }
 }
