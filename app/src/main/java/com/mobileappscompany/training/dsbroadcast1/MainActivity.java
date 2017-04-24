@@ -1,6 +1,7 @@
 package com.mobileappscompany.training.dsbroadcast1;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -12,7 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    BroadcastReceiver mR1;
+    BroadcastReceiver dynaTxtReceiver;
     Button sBroadcast, dBroadcast;
     EditText eStatic, eDynamic;
 
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             eStatic.setText(obtained.getString("messageStatic2"));
         }
 
-        mR1 = new BroadcastReceiver(){
+        dynaTxtReceiver = new BroadcastReceiver(){
             @Override
             public void onReceive(Context context, Intent intent) {
                 Toast.makeText(context, intent.getStringExtra("messageDynamic"), Toast.LENGTH_SHORT).show();
@@ -65,13 +66,24 @@ public class MainActivity extends AppCompatActivity {
         };
 
     }
-
     @Override
     protected void onRestart() {
         //registerReceiver(mR1, new IntentFilter(DYNAMIC));
         super.onRestart();
         //unregisterReceiver(mR1);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(dynaTxtReceiver, new IntentFilter(DYNAMIC));
+    }
+
+    @Override
+    protected void onPause() {
+        unregisterReceiver(dynaTxtReceiver);
+        super.onPause();
     }
 
     @Override
@@ -82,16 +94,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         //unregisterReceiver(mR1);
-        mR1 = new BroadcastReceiver(){
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Toast.makeText(context, intent.getStringExtra("messageDynamic"), Toast.LENGTH_SHORT).show();
-                eDynamic.setText(intent.getStringExtra("messageDynamic2"));
-                eDynamic.setText(intent.getStringExtra("messageDynamic"));
-                eStatic.setText(intent.getStringExtra("messageStatic2"));
-                eStatic.setText(intent.getStringExtra("messageStatic"));
-            }
-        };
+//        dynaTxtReceiver = new BroadcastReceiver(){
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                Toast.makeText(context, intent.getStringExtra("messageDynamic"), Toast.LENGTH_SHORT).show();
+//                eDynamic.setText(intent.getStringExtra("messageDynamic2"));
+//                eDynamic.setText(intent.getStringExtra("messageDynamic"));
+//                eStatic.setText(intent.getStringExtra("messageStatic2"));
+//                eStatic.setText(intent.getStringExtra("messageStatic"));
+//            }
+//        };
         super.onStop();
 
     }
